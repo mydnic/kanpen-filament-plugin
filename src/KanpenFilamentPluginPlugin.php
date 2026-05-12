@@ -1,15 +1,15 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Mydnic\KanpenFilamentPlugin;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 
-class SkeletonPlugin implements Plugin
+class KanpenFilamentPluginPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'skeleton';
+        return 'kanpen-filament-plugin';
     }
 
     public function register(Panel $panel): void

@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Mydnic\KanpenFilamentPlugin\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class KanpenFilamentPluginCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'kanpen-filament-plugin';
 
     public $description = 'My command';
 
