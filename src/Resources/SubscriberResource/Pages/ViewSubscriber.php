@@ -4,9 +4,9 @@ namespace Mydnic\KanpenFilamentPlugin\Resources\SubscriberResource\Pages;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
-use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Mydnic\Kanpen\Models\Subscriber;
