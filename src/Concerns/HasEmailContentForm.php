@@ -5,6 +5,7 @@ namespace Mydnic\KanpenFilamentPlugin\Concerns;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Schemas\Components\Section;
@@ -18,7 +19,7 @@ trait HasEmailContentForm
     {
         return Section::make('Content')
             ->schema([
-                \Filament\Forms\Components\ToggleButtons::make('content_type')
+                ToggleButtons::make('content_type')
                     ->label('Editor')
                     ->options([
                         'unlayer' => 'Drag & Drop',
