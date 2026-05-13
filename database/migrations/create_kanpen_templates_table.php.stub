@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('kanpen_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('content_type')->nullable();
+            $table->longText('content_markdown')->nullable();
             $table->json('design')->nullable();
             $table->longText('content_html')->nullable();
             $table->timestamps();

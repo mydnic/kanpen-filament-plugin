@@ -10,6 +10,8 @@ class Template extends Model
 
     protected $fillable = [
         'name',
+        'content_type',
+        'content_markdown',
         'design',
         'content_html',
     ];

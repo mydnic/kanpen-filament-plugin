@@ -9,14 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table(config('kanpen.tables.campaigns'), function (Blueprint $table) {
-            $table->json('design')->nullable()->after('content_html');
+            $table->string('content_type')->nullable()->after('content_html');
+            $table->longText('content_markdown')->nullable()->after('content_type');
+            $table->json('design')->nullable()->after('content_markdown');
         });
     }
 
     public function down(): void
     {
         Schema::table(config('kanpen.tables.campaigns'), function (Blueprint $table) {
-            $table->dropColumn('design');
+            $table->dropColumn(['content_type', 'content_markdown', 'design']);
         });
     }
 };

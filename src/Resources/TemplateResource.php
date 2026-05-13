@@ -6,14 +6,13 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Mydnic\KanpenFilamentPlugin\Fields\UnlayerEditor;
+use Mydnic\KanpenFilamentPlugin\Concerns\HasEmailContentForm;
 use Mydnic\KanpenFilamentPlugin\Models\Template;
 use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\CreateTemplate;
 use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\EditTemplate;
@@ -21,11 +20,13 @@ use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\ListTemplates;
 
 class TemplateResource extends Resource
 {
+    use HasEmailContentForm;
+
     protected static ?string $model = Template::class;
 
-    protected static string | null | \BackedEnum $navigationIcon = 'heroicon-o-document-text';
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string | null | \UnitEnum $navigationGroup = 'Kanpen';
+    protected static string|null|\UnitEnum $navigationGroup = 'Kanpen';
 
     protected static ?int $navigationSort = 3;
 
@@ -40,14 +41,7 @@ class TemplateResource extends Resource
                         ->columnSpanFull(),
                 ]),
 
-            Section::make('Design')
-                ->schema([
-                    Hidden::make('content_html'),
-                    UnlayerEditor::make('design')
-                        ->label('')
-                        ->columnSpanFull(),
-                ])
-                ->columnSpanFull(),
+            static::contentSection(),
         ]);
     }
 
@@ -58,6 +52,17 @@ class TemplateResource extends Resource
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('content_type')
+                    ->label('Editor')
+                    ->badge()
+                    ->color(fn (?string $state): string => match ($state) {
+                        'markdown' => 'info',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'markdown' => 'Markdown',
+                        default => 'Drag & Drop',
+                    }),
                 TextColumn::make('updated_at')
                     ->label('Last updated')
                     ->dateTime()

@@ -13,8 +13,6 @@ use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -29,8 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Mydnic\Kanpen\Actions\SendCampaignAction;
 use Mydnic\Kanpen\Enums\CampaignStatus;
 use Mydnic\Kanpen\Models\Campaign;
-use Mydnic\KanpenFilamentPlugin\Fields\UnlayerEditor;
-use Mydnic\KanpenFilamentPlugin\Models\Template;
+use Mydnic\KanpenFilamentPlugin\Concerns\HasEmailContentForm;
 use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource\Pages\CreateCampaign;
 use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource\Pages\EditCampaign;
 use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource\Pages\ListCampaigns;
@@ -38,6 +35,8 @@ use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource\Pages\ViewCampaign;
 
 class CampaignResource extends Resource
 {
+    use HasEmailContentForm;
+
     protected static ?string $model = Campaign::class;
 
     protected static string | null | \BackedEnum $navigationIcon = 'heroicon-o-envelope';
@@ -80,31 +79,7 @@ class CampaignResource extends Resource
                 ])
                 ->columns(2),
 
-            Section::make('Content')
-                ->schema([
-                    Select::make('_template_id')
-                        ->label('Load from template')
-                        ->placeholder('Select a template to start from...')
-                        ->options(fn () => Template::orderBy('name')->pluck('name', 'id')->toArray())
-                        ->live()
-                        ->dehydrated(false)
-                        ->afterStateUpdated(function (?int $state, $set): void {
-                            if (! $state) {
-                                return;
-                            }
-                            $template = Template::find($state);
-                            if (! $template) {
-                                return;
-                            }
-                            $set('design', $template->design);
-                            $set('content_html', $template->content_html);
-                        })
-                        ->columnSpanFull(),
-                    Hidden::make('content_html'),
-                    UnlayerEditor::make('design')
-                        ->label('')
-                        ->columnSpanFull(),
-                ]),
+            static::contentSection(),
 
         ]);
     }
