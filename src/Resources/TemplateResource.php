@@ -37,11 +37,12 @@ class TemplateResource extends Resource
                 ->schema([
                     TextInput::make('name')
                         ->required()
-                        ->maxLength(255)
-                        ->columnSpanFull(),
-                ])->columns(4),
+                        ->maxLength(255),
+                ])
+                ->columnSpanFull(),
 
-            static::contentSection()->columns(4),
+            static::contentSection()
+                ->columnSpanFull(),
         ]);
     }
 
