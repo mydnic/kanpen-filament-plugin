@@ -2,12 +2,12 @@
 
 namespace Mydnic\KanpenFilamentPlugin;
 
-use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Livewire\Features\SupportTesting\Testable;
+use Mydnic\KanpenFilamentPlugin\Testing\TestsKanpenFilamentPlugin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Mydnic\KanpenFilamentPlugin\Testing\TestsKanpenFilamentPlugin;
+
 
 class KanpenFilamentPluginServiceProvider extends PackageServiceProvider
 {
