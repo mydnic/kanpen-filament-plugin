@@ -58,7 +58,7 @@
     >
         <div
             id="{{ $getId() }}-canvas"
-            style="min-height: 600px; border-radius: 0.5rem; overflow: hidden;"
+            style="height: 700px; width: 100%; border-radius: 0.5rem;"
         ></div>
     </div>
 </x-dynamic-component>
