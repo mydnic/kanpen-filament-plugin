@@ -4,6 +4,8 @@ namespace Mydnic\KanpenFilamentPlugin;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource;
+use Mydnic\KanpenFilamentPlugin\Resources\SubscriberResource;
 
 class KanpenFilamentPluginPlugin implements Plugin
 {
@@ -14,7 +16,10 @@ class KanpenFilamentPluginPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel->resources([
+            CampaignResource::class,
+            SubscriberResource::class,
+        ]);
     }
 
     public function boot(Panel $panel): void

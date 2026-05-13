@@ -17,46 +17,14 @@ You can install the package via composer:
 composer require mydnic/kanpen-filament-plugin
 ```
 
-> [!IMPORTANT]
-> If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
-
-After setting up a custom theme add the plugin's views to your theme css file or your app's css file if using the standalone packages.
-
-```css
-@source '../../../../vendor/mydnic/kanpen-filament-plugin/resources/**/*.blade.php';
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="kanpen-filament-plugin-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="kanpen-filament-plugin-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="kanpen-filament-plugin-views"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
 ```php
-$kanpenFilamentPlugin = new Mydnic\KanpenFilamentPlugin();
-echo $kanpenFilamentPlugin->echoPhrase('Hello, Mydnic!');
+use Mydnic\KanpenFilamentPlugin\KanpenFilamentPlugin;
+// ...
+
+return $panel
+    ->plugin(new KanpenFilamentPlugin());
 ```
 
 ## Testing
