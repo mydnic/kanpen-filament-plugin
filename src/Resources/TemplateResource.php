@@ -39,9 +39,9 @@ class TemplateResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->columnSpanFull(),
-                ]),
+                ])->columns(4),
 
-            static::contentSection(),
+            static::contentSection()->columns(4),
         ]);
     }
 
