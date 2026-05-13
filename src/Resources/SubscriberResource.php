@@ -26,9 +26,9 @@ class SubscriberResource extends Resource
 {
     protected static ?string $model = Subscriber::class;
 
-    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-users';
+    protected static string | null | \BackedEnum $navigationIcon = 'heroicon-o-users';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Kanpen';
+    protected static string | null | \UnitEnum $navigationGroup = 'Kanpen';
 
     protected static ?int $navigationSort = 2;
 
