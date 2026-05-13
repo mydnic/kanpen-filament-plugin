@@ -8,7 +8,6 @@ use Mydnic\KanpenFilamentPlugin\Testing\TestsKanpenFilamentPlugin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-
 class KanpenFilamentPluginServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'kanpen-filament-plugin';
