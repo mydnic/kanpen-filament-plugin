@@ -5,9 +5,10 @@ namespace Mydnic\KanpenFilamentPlugin\Concerns;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Section;
 use Illuminate\Mail\Markdown;
 use Mydnic\KanpenFilamentPlugin\Fields\UnlayerEditor;
 use Mydnic\KanpenFilamentPlugin\Models\Template;
@@ -18,7 +19,7 @@ trait HasEmailContentForm
     {
         return Section::make('Content')
             ->schema([
-                \Filament\Forms\Components\ToggleButtons::make('content_type')
+                ToggleButtons::make('content_type')
                     ->label('Editor')
                     ->options([
                         'unlayer' => 'Drag & Drop',
