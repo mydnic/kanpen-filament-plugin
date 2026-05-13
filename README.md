@@ -22,9 +22,10 @@ Install the plugin via Composer:
 composer require mydnic/kanpen-filament-plugin
 ```
 
-Run the migrations:
+Publish and run the migrations:
 
 ```bash
+php artisan vendor:publish --tag="kanpen-filament-plugin-migrations"
 php artisan migrate
 ```
 
