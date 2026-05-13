@@ -57,7 +57,8 @@ class CampaignResource extends Resource
                         ->required()
                         ->maxLength(255),
                 ])
-                ->columns(2),
+                ->columns(2)
+                ->columnSpanFull(),
 
             Section::make('Sender')
                 ->schema([
@@ -77,10 +78,11 @@ class CampaignResource extends Resource
                     DateTimePicker::make('scheduled_at')
                         ->label('Schedule at'),
                 ])
-                ->columns(2),
+                ->columns(2)
+                ->columnSpanFull(),
 
-            static::contentSection(),
-
+            static::contentSection()
+                ->columnSpanFull(),
         ]);
     }
 
