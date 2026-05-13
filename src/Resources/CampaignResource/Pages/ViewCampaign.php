@@ -4,7 +4,7 @@ namespace Mydnic\KanpenFilamentPlugin\Resources\CampaignResource\Pages;
 
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
-use Filament\Infolists\Components\IconEntry;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -109,7 +109,7 @@ class ViewCampaign extends ViewRecord
                 ->color('gray')
                 ->visible(fn (Campaign $record): bool => $record->isDraft())
                 ->form([
-                    \Filament\Forms\Components\TextInput::make('email')
+                    TextInput::make('email')
                         ->label('Recipient email')
                         ->email()
                         ->required(),
