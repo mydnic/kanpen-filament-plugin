@@ -6,12 +6,13 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Mydnic\KanpenFilamentPlugin\Resources\CampaignResource;
 use Mydnic\KanpenFilamentPlugin\Resources\SubscriberResource;
+use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource;
 
 class KanpenFilamentPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'kanpen-filament-plugin';
+        return 'kanpen';
     }
 
     public function register(Panel $panel): void
@@ -19,6 +20,7 @@ class KanpenFilamentPlugin implements Plugin
         $panel->resources([
             CampaignResource::class,
             SubscriberResource::class,
+            TemplateResource::class,
         ]);
     }
 

@@ -2,11 +2,10 @@
 
 namespace Mydnic\KanpenFilamentPlugin;
 
-use Filament\Support\Facades\FilamentAsset;
 use Livewire\Features\SupportTesting\Testable;
-use Mydnic\KanpenFilamentPlugin\Testing\TestsKanpenFilamentPlugin;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Mydnic\KanpenFilamentPlugin\Testing\TestsKanpenFilamentPlugin;
 
 class KanpenFilamentPluginServiceProvider extends PackageServiceProvider
 {
@@ -16,13 +15,17 @@ class KanpenFilamentPluginServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        $package->name(static::$name);
+        $package
+            ->name(static::$name)
+            ->hasViews(static::$viewNamespace)
+            ->hasMigrations([
+                'create_kanpen_templates_table',
+                'add_design_to_kanpen_campaigns_table',
+            ]);
     }
 
     public function packageBooted(): void
     {
-        FilamentAsset::register([], 'mydnic/kanpen-filament-plugin');
-
         Testable::mixin(new TestsKanpenFilamentPlugin);
     }
 }

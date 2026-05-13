@@ -1,0 +1,86 @@
+<?php
+
+namespace Mydnic\KanpenFilamentPlugin\Resources;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Mydnic\KanpenFilamentPlugin\Fields\UnlayerEditor;
+use Mydnic\KanpenFilamentPlugin\Models\Template;
+use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\CreateTemplate;
+use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\EditTemplate;
+use Mydnic\KanpenFilamentPlugin\Resources\TemplateResource\Pages\ListTemplates;
+
+class TemplateResource extends Resource
+{
+    protected static ?string $model = Template::class;
+
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string|null|\UnitEnum $navigationGroup = 'Kanpen';
+
+    protected static ?int $navigationSort = 3;
+
+    public static function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            Section::make()
+                ->schema([
+                    TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                ]),
+
+            Section::make('Design')
+                ->schema([
+                    Hidden::make('content_html'),
+                    UnlayerEditor::make('design')
+                        ->label('')
+                        ->columnSpanFull(),
+                ])
+                ->columnSpanFull(),
+        ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->label('Last updated')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ])
+            ->defaultSort('updated_at', 'desc');
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListTemplates::route('/'),
+            'create' => CreateTemplate::route('/create'),
+            'edit' => EditTemplate::route('/{record}/edit'),
+        ];
+    }
+}

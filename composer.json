@@ -60,7 +60,7 @@
                 "Mydnic\\KanpenFilamentPlugin\\KanpenFilamentPluginServiceProvider"
             ],
             "aliases": {
-                "KanpenFilamentPlugin": "Mydnic\\KanpenFilamentPlugin\\Facades\\KanpenFilamentPlugin"
+                "Kanpen": "Mydnic\\KanpenFilamentPlugin\\Facades\\KanpenFilamentPlugin"
             }
         }
     },
