@@ -23,9 +23,9 @@ class TemplateResource extends Resource
 {
     protected static ?string $model = Template::class;
 
-    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-document-text';
+    protected static string | null | \BackedEnum $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Kanpen';
+    protected static string | null | \UnitEnum $navigationGroup = 'Kanpen';
 
     protected static ?int $navigationSort = 3;
 
