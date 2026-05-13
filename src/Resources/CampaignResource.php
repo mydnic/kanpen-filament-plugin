@@ -82,7 +82,9 @@ class CampaignResource extends Resource
                     RichEditor::make('content_html')
                         ->label('HTML Content')
                         ->columnSpanFull(),
-                ]),
+                ])
+                ->columns(4),
+
         ]);
     }
 

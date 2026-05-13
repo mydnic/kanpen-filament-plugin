@@ -9,6 +9,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Mydnic\Kanpen\Models\Subscriber;
 use Mydnic\KanpenFilamentPlugin\Resources\SubscriberResource\Pages\ListSubscribers;
+use Mydnic\KanpenFilamentPlugin\Resources\SubscriberResource\Pages\ViewSubscriber;
 
 class SubscriberResource extends Resource
 {
@@ -69,6 +71,7 @@ class SubscriberResource extends Resource
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                ViewAction::make(),
                 DeleteAction::make(),
                 RestoreAction::make(),
                 ForceDeleteAction::make(),
@@ -87,6 +90,7 @@ class SubscriberResource extends Resource
     {
         return [
             'index' => ListSubscribers::route('/'),
+            'view' => ViewSubscriber::route('/{record}'),
         ];
     }
 
