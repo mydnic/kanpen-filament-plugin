@@ -1,12 +1,10 @@
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     <div
-        wire:ignore
         x-data="{
             design: $wire.entangle('{{ $getStatePath() }}'),
             html: $wire.entangle('{{ $getHtmlStatePath() }}'),
             editor: null,
             syncing: false,
-            importModalOpen: false,
             importJson: '',
             importError: '',
 
@@ -58,13 +56,8 @@
                 });
             },
 
-            openImportModal() {
-                this.importJson = '';
-                this.importError = '';
-                this.importModalOpen = true;
-            },
-
             confirmImport() {
+                this.importError = '';
                 let parsed;
                 try {
                     parsed = JSON.parse(this.importJson);
@@ -78,75 +71,64 @@
                 }
                 this.editor.loadDesign(parsed);
                 this.exportDesign();
-                this.importModalOpen = false;
+                this.importJson = '';
+                this.$dispatch('close-modal', { id: 'unlayer-import-{{ $getId() }}' });
             },
         }"
     >
         {{-- Toolbar --}}
         <div class="flex justify-end mb-2">
-            <button
-                type="button"
-                x-on:click="openImportModal()"
-                class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 bg-white border border-gray-300 shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
+            <x-filament::button
+                size="sm"
+                color="gray"
+                icon="heroicon-o-arrow-up-tray"
+                x-on:click="importJson = ''; importError = ''; $dispatch('open-modal', { id: 'unlayer-import-{{ $getId() }}' })"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
-                </svg>
                 Import JSON
-            </button>
+            </x-filament::button>
         </div>
 
-        {{-- Editor canvas --}}
-        <div
-            id="{{ $getId() }}-canvas"
-            style="height: 700px; width: 100%; border-radius: 0.5rem;"
-        ></div>
+        {{-- Canvas (wire:ignore scoped to the editor only) --}}
+        <div wire:ignore>
+            <div
+                id="{{ $getId() }}-canvas"
+                style="height: 700px; width: 100%; border-radius: 0.5rem;"
+            ></div>
+        </div>
 
         {{-- Import modal --}}
-        <div
-            x-show="importModalOpen"
-            x-cloak
-            class="fixed inset-0 z-50 flex items-center justify-center p-4"
-        >
-            {{-- Backdrop --}}
-            <div
-                class="absolute inset-0 bg-black/50"
-                x-on:click="importModalOpen = false"
-            ></div>
+        <x-filament::modal id="unlayer-import-{{ $getId() }}" width="2xl">
+            <x-slot name="heading">Import Unlayer JSON</x-slot>
 
-            {{-- Dialog --}}
-            <div class="relative z-10 w-full max-w-2xl rounded-xl bg-white shadow-xl dark:bg-gray-900 p-6">
-                <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-1">Import Unlayer JSON</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    Paste a design JSON from <a href="https://unlayer.com/templates" target="_blank" class="underline">unlayer.com/templates</a> or any exported Unlayer design.
-                </p>
+            <x-slot name="description">
+                Paste a design JSON from
+                <a href="https://unlayer.com/templates" target="_blank" class="underline">unlayer.com/templates</a>
+                or any exported Unlayer design.
+            </x-slot>
 
+            <x-filament::input.wrapper>
                 <textarea
                     x-model="importJson"
-                    rows="10"
+                    rows="12"
                     placeholder='{ "counters": {}, "body": { ... } }'
-                    class="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 font-mono text-xs text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
+                    class="block w-full font-mono text-xs border-none bg-transparent px-3 py-2 text-gray-950 placeholder:text-gray-400 focus:ring-0 dark:text-white dark:placeholder:text-gray-500"
                 ></textarea>
+            </x-filament::input.wrapper>
 
-                <p x-show="importError" x-text="importError" class="mt-2 text-sm text-danger-600"></p>
+            <p x-show="importError" x-text="importError" class="mt-2 text-sm text-danger-600 dark:text-danger-400"></p>
 
-                <div class="mt-4 flex justify-end gap-3">
-                    <button
-                        type="button"
-                        x-on:click="importModalOpen = false"
-                        class="rounded-lg px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        type="button"
-                        x-on:click="confirmImport()"
-                        class="rounded-lg px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    >
-                        Import
-                    </button>
-                </div>
-            </div>
-        </div>
+            <x-slot name="footerActions">
+                <x-filament::button x-on:click="confirmImport()">
+                    Import
+                </x-filament::button>
+
+                <x-filament::button
+                    color="gray"
+                    x-on:click="$dispatch('close-modal', { id: 'unlayer-import-{{ $getId() }}' })"
+                >
+                    Cancel
+                </x-filament::button>
+            </x-slot>
+        </x-filament::modal>
     </div>
 </x-dynamic-component>
